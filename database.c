@@ -67,7 +67,6 @@ bool parse_database_file(char const* filename, database* db) {
     NULL);
 
 
-  // FIXME: remove??
   if (err) {
     mpc_err_print(err);
     mpc_err_delete(err);
@@ -87,8 +86,6 @@ bool parse_database_file(char const* filename, database* db) {
       mpc_ast_traverse_start(root, mpc_ast_trav_order_post);
 
 
-    // FIXME: use strstr() for tag checking!
-    
     // Extract info from AST
     char curr_str[BUFSIZ]; // Current raw info string
     char* curr_token = curr_str; // Current location to put the next token
@@ -102,10 +99,6 @@ bool parse_database_file(char const* filename, database* db) {
       }
 
 
-      // FIXME: remove!!
-      fprintf(stderr, "%s\n", trav->curr_node->tag);
-
-
       // Switch on type of node
       if (strstr(trav->curr_node->tag, "entry")) {
         // Process the current read string (i.e. the previous one just
@@ -113,8 +106,6 @@ bool parse_database_file(char const* filename, database* db) {
         
         // Reset
         *curr_token++ = '\0';
-        // FIXME: remove!!
-        fprintf(stderr, "curr_str = %s\n", curr_str);
         curr_token = curr_str;
         str_to_entry(&db->entries[db_index], curr_str);
         
@@ -158,7 +149,7 @@ bool parse_database_file(char const* filename, database* db) {
   qsort(db->entries, db_index, sizeof(client_info), &compare_sub_num);
 
 
-  // FIXME: remove!!
+  fprintf(stderr, "Database initialized with:\n");
   dump_database(db);
 
 
